@@ -23,19 +23,6 @@ This repository contains the **Spring Boot backend** powering AlumX.
 
 ---
 
-## 🌐 Overview
-
-AlumX bridges the gap between **college students and alumni** by enabling:
-
-- Verified onboarding using college email, Google, or LinkedIn
-- AI-driven alumni discovery using skill & interest matching
-- Mentorship workflows and professional networking
-- Content creation through blogs and experience sharing
-
-The backend should be designed with **enterprise-grade practices**, making it ideal for college projects, hackathons, and resume-worthy system design discussions.
-
----
-
 ## ✨ Core Features
 
 ### 👤 User Management
@@ -67,18 +54,6 @@ The backend should be designed with **enterprise-grade practices**, making it id
 - AI-assisted resume generation
 - Uses user-provided API key
 - Auto-fill details, skills from AlumX profile
-
----
-
-## 🤖 AI-Powered Capabilities
-
-- **RAG-based Alumni Discovery**
-  - Vector embeddings for skills & interests
-  - Semantic similarity search
-- **AI Resume Assistant**
-  - Resume suggestions & formatting
-- **Smart Search**
-  - Natural language queries for alumni search
 
 ---
 
@@ -123,113 +98,83 @@ Spring Boot API Gateway
 
 ---
 
-## 🗄 Database Schema (High Level)
-
-### Users
-- id
-- name
-- email
-- role (STUDENT / ALUMNI / PROFESSOR)
-- skills
-- interests
-- company
-- graduation_year
-
-### Blogs
-- id
-- author_id
-- content
-- likes
-- created_at
-
-### Mentorship Requests
-- id
-- student_id
-- alumni_id
-- status (PENDING / ACCEPTED / REJECTED)
-
-### Comments
-- id
-- blog_id
-- user_id
-- content
-
----
-
-## 🔗 API Design
-
-- RESTful APIs
-- JWT-based authentication
-- Role-based authorization
-- Swagger/OpenAPI documentation
-
-Example:
-```
-POST   /api/auth/login
-GET    /api/users/search
-POST   /api/mentorship/request
-GET    /api/blogs/feed
-```
-
----
-
-## 🔐 Security
-
-- JWT authentication
-- OAuth2 login
-- Role-based access control (RBAC)
-- Input validation & sanitization
-- Rate limiting (Redis)
+### Prerequisites
+- Java 21
+- Maven
+- PostgreSQL
+- Docker
+- VectorDB
+- WebSockets
 
 ---
 
 ## 🛠️ Project Setup
+This project uses **Spring Boot + PostgreSQL** and reads configuration from **environment variables** to keep secrets out of the codebase.
 
-### Prerequisites
-- Java 17+
-- Maven
-- PostgreSQL
-- Redis
-
-### Setup Steps
+### 1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/opencodeiiita/alum-x-backend.git
 cd alum-x-backend
 ```
 
+---
+
+### 2️⃣ Set up PostgreSQL locally
+
+Make sure PostgreSQL is installed and running on your system.
+
+#### Create database and user
+
+Login to PostgreSQL as `postgres`:
+
 ```bash
-cp application.yml.example application.yml
+psql -U postgres
 ```
+
+Then run:
+
+```sql
+CREATE DATABASE alumx;
+CREATE USER alumx WITH PASSWORD 'alumx123';
+GRANT ALL PRIVILEGES ON DATABASE alumx TO alumx;
+```
+
+Exit PostgreSQL:
+
+```sql
+\q
+```
+
+---
+
+### 3️⃣ Configure environment variables
+
+The .env file you will need, will be provided to you by the mentor
+
+> ⚠️ **Do not commit `.env`** — it is ignored via `.gitignore`.
+---
+
+### 4️⃣ IntelliJ Configuration
+
+Spring Boot does **not** automatically load `.env` files in IntelliJ.
+
+#### Steps:
+
+1. Go to **Run → Edit Configurations**
+2. Select your Spring Boot run configuration
+3. Under **Environment variables**, click **Load from file**
+4. Select the `.env` file
+5. Apply and close
+
+---
+
+### 5️⃣ Build and run the backend
 
 ```bash
 mvn clean install
 mvn spring-boot:run
 ```
-
-Server runs at:
-```
-http://localhost:8080
-```
-
----
-
-## 📁 Directory Structure
-
-```
-src/main/java/com/alumx
-├── auth
-├── user
-├── blog
-├── mentorship
-├── search
-├── ai
-├── config
-├── security
-└── common
-```
-
----
 
 ## 🤝 Contribution Guidelines
 
@@ -239,11 +184,3 @@ src/main/java/com/alumx
 - Avoid pushing secrets
 
 ---
-
-## 🚀 Future Enhancements
-
-- Real-time chat (WebSockets)
-- Alumni referral system
-- Analytics dashboard
-- Job & internship postings
-- Mobile push notifications
